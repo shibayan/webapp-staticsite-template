@@ -36,19 +36,19 @@
         "VuePress"
       ],
       "metadata": {
-        "description": "Static site generator."
+        "description": "Select static site generator."
       }
     },
     "buildCommand": {
       "type": "string",
       "metadata": {
-        "description": "Build command."
+        "description": "Enter build command."
       }
     },
     "publishDirectory": {
       "type": "string",
       "metadata": {
-        "description": "Publish directory."
+        "description": "Select publish directory."
       }
     }
   },
@@ -58,7 +58,7 @@
     "sku": "[parameters('sku')]",
     "buildCommand": "[parameters('buildCommand')]",
     "publishDirectory": "[parameters('publishDirectory')]",
-    "extensionName": "[concat(parameters('siteGenerator'), '.SiteExtension')]"
+    "extensionName": "[concat(parameters('siteGenerator'), '.BuildExtension')]"
   },
   "resources": [
     {
