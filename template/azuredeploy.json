@@ -1,0 +1,110 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "siteName": {
+      "type": "string",
+      "metadata": {
+        "description": "Base name of the resource such as web app name and app service plan."
+      },
+      "minLength": 2
+    },
+    "sku": {
+      "type": "string",
+      "allowedValues": [
+        "F1",
+        "D1",
+        "B1",
+        "B2",
+        "B3",
+        "S1",
+        "S2",
+        "S3",
+        "P1V2",
+        "P2V2",
+        "P3V2"
+      ],
+      "defaultValue": "F1",
+      "metadata": {
+        "description": "The SKU of App Service Plan, by default is Free F1."
+      }
+    },
+    "buildCommand": {
+      "type": "string",
+      "metadata": {
+        "description": "Build command."
+      }
+    },
+    "publishDirectory": {
+      "type": "string",
+      "metadata": {
+        "description": "Publish directory."
+      }
+    }
+  },
+  "variables": {
+    "siteName": "[concat(parameters('siteName'), '-site')]",
+    "servicePlanName": "[concat('ASP-', parameters('siteName'))]",
+    "sku": "[parameters('sku')]",
+    "buildCommand": "[parameters('buildCommand')]",
+    "publishDirectory": "[parameters('publishDirectory')]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "name": "[variables('servicePlanName')]",
+      "apiVersion": "2018-02-01",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "name": "[variables('servicePlanName')]"
+      },
+      "sku": {
+        "name": "[variables('sku')]"
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "name": "[variables('siteName')]",
+      "apiVersion": "2018-11-01",
+      "location": "[resourceGroup().location]",
+      "kind": "app",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', variables('servicePlanName'))]"
+      ],
+      "properties": {
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('servicePlanName'))]",
+        "siteConfig": {
+          "appSettings": [
+            {
+              "name": "WEBSITE_NODE_DEFAULT_VERSION",
+              "value": "10.15.2"
+            },
+            {
+              "name": "WEBSITE_BUILD_COMMAND",
+              "value": "[variables('buildCommand')]"
+            },
+            {
+              "name": "WEBSITE_PUBLISH_DIRECTORY",
+              "value": "[variables('publishDirectory')]"
+            }
+          ],
+          "minTlsVersion": "1.2",
+          "http20Enabled": true,
+          "ftpsState": "Disabled"
+        },
+        "clientAffinityEnabled": false,
+        "httpsOnly": true
+      },
+      "resources": [
+        {
+          "name": "Static.SiteExtension",
+          "type": "siteextensions",
+          "apiVersion": "2018-11-01",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', variables('siteName'))]"
+          ]
+        }
+      ]
+    }
+  ]
+}
