@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
-        <id>Static.SiteExtension</id>
+        <id>VuePress.BuildExtension</id>
         <version>1.0.0</version>
         <authors>shibayan</authors>
         <license type="expression">MIT</license>
         <projectUrl>https://github.com/shibayan/webapp-staticsite-template</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>Site Extension for Static Site Generator</description>
+        <description>VuePress Build Extension for Azure Web Apps</description>
         <tags>AzureSiteExtension</tags>
         <packageTypes>
             <packageType name="AzureSiteExtension" />

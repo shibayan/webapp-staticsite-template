@@ -29,6 +29,16 @@
         "description": "The SKU of App Service Plan, by default is Free F1."
       }
     },
+    "siteGenerator": {
+      "type": "string",
+      "allowedValues": [
+        "Hugo",
+        "VuePress"
+      ],
+      "metadata": {
+        "description": "Static site generator."
+      }
+    },
     "buildCommand": {
       "type": "string",
       "metadata": {
@@ -47,7 +57,8 @@
     "servicePlanName": "[concat('ASP-', parameters('siteName'))]",
     "sku": "[parameters('sku')]",
     "buildCommand": "[parameters('buildCommand')]",
-    "publishDirectory": "[parameters('publishDirectory')]"
+    "publishDirectory": "[parameters('publishDirectory')]",
+    "extensionName": "[concat(parameters('siteGenerator'), '.SiteExtension')]"
   },
   "resources": [
     {
@@ -97,7 +108,7 @@
       },
       "resources": [
         {
-          "name": "Static.SiteExtension",
+          "name": "[variables('extensionName')]",
           "type": "siteextensions",
           "apiVersion": "2018-11-01",
           "dependsOn": [
