@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+  <system.webServer>
+    <runtime xdt:Transform="Insert">
+      <environmentVariables>
+        <add name="APPSETTING_COMMAND" value="%XDT_EXTENSIONPATH%\deploy.cmd" />
+      </environmentVariables>
+    </runtime>
+  </system.webServer>
+  <location path="%XDT_SITENAME%" xdt:Locator="Match(path)">
+    <system.webServer xdt:Transform="InsertIfMissing">
+      <httpErrors xdt:Transform="InsertIfMissing">
+        <remove statusCode="404" xdt:Transform="InsertIfMissing" />
+        <error statusCode="404" path="404.html" responseMode="File" xdt:Transform="InsertIfMissing" />
+      </httpErrors>
+    </system.webServer>
+  </location>
+</configuration>

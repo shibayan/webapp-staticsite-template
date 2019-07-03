@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>Hexo.BuildExtension</id>
+        <version>1.0.0</version>
+        <authors>shibayan</authors>
+        <license type="expression">MIT</license>
+        <projectUrl>https://github.com/shibayan/webapp-staticsite-template</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Hexo Build Extension for Azure Web Apps</description>
+        <tags>AzureSiteExtension</tags>
+        <packageTypes>
+            <packageType name="AzureSiteExtension" />
+        </packageTypes>
+    </metadata>
+    <files>
+        <file src="applicationHost.xdt" target="content" />
+        <file src="deploy.cmd" target="content" />
+    </files>
+</package>
